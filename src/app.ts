@@ -6,6 +6,7 @@ import express, {
 import { userRouter } from "./modules/users/users.routes";
 import { profileRouter } from "./modules/profiles/profile.route";
 import { pool } from "./db";
+import { authRouter } from "./modules/auth/auth.route";
 
 const app: Application = express();
 
@@ -17,20 +18,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/users", userRouter);
 app.use("/profiles", profileRouter);
-app.post("/posts", async (req: Request, res: Response) => {
-  try {
-    await pool.query(
-      `INSERT INTO posts (name) VALUES($1) RETURNING *`,
-      [req.body.name],
-    );
-    res.status(201).json({
-      success: true,
-      message: "Post created successfully",
-    });
-  } catch (err) {
-    const error = err instanceof Error ? err : new Error("Unknown error");
-    res.status(500).json({});
-  }
-});
+app.use("/api/auth", authRouter);
 
 export default app;
