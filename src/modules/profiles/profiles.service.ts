@@ -1,4 +1,4 @@
-import { pool } from "../../db";
+import { pool } from "../../db/index";
 
 const profileserviceDB = async (payload: any) => {
   const { user_id , bio, phone, address } = payload;
@@ -18,6 +18,12 @@ const profileserviceDB = async (payload: any) => {
   return result;
 };
 
+const getAllProfilesDB = async () => {
+  const result = await pool.query(`SELECT * FROM profiles`);
+  return result;
+};
+
 export const profileDB = {
   profileserviceDB,
+  getAllProfilesDB
 };

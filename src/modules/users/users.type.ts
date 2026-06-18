@@ -4,6 +4,7 @@ export type User = {
   password: string;
   is_active?: boolean;
   age: number;
+  role?: string;
 };
 
 export type atleastusers = User & Record<string, unknown>;

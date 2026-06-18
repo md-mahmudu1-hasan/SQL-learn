@@ -20,6 +20,25 @@ const addProfile = async (req: Request, res: Response) => {
   }
 };
 
+const getAllProfiles = async (req: Request, res: Response) => {
+  try {
+    const result = await profileDB.getAllProfilesDB();
+    res.status(200).json({
+      success: true,
+      message: "Profiles retrieved successfully",
+      data: result.rows,
+    });
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err : new Error("Unknown error");
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error,
+    });
+  }
+};
+
 export const UserProfilecontroller = {
   addProfile,
+  getAllProfiles
 };

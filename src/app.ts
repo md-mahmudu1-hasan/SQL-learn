@@ -5,12 +5,14 @@ import express, {
 } from "express";
 import { userRouter } from "./modules/users/users.routes";
 import { profileRouter } from "./modules/profiles/profile.route";
-import { pool } from "./db";
 import { authRouter } from "./modules/auth/auth.route";
+import cookieParser from "cookie-parser";
 
 const app: Application = express();
 
+app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
