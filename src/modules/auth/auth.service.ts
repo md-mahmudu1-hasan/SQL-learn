@@ -37,7 +37,10 @@ const logindb = async (email: string, password: string) => {
 };
 
 const generateNewAccesstokebyrefreashToken = async (refreshToken: string) => {
-  const decoded = jwt.verify(refreshToken, config.jwtRefreshSecret as string);
+  const decoded = jwt.verify(
+    refreshToken,
+    config.jwtRefreshSecret as string,
+  ) as jwt.JwtPayload;
 
   const userData = await pool.query("SELECT * FROM users WHERE email = $1", [
     decoded.email,
